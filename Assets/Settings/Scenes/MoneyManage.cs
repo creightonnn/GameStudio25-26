@@ -1,15 +1,20 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class MoneyManage : MonoBehaviour
 {
-    public float money = 0f; // the current money
-    public float moneyPerSecond = 1f; // base money per second4
+    public int money = 0; // the current money
+    public int moneyPerSecond = 1; // base money per second4
     public TextMeshProUGUI moneyText;
+    public int upgradeCost = 10;
 
+    void Start()
+    {
+        StartCoroutine(WaitTime());
+    }
     void Update()
     {
-        money += moneyPerSecond * Time.deltaTime; // increases money every second
 
         if (moneyText != null)
         {
@@ -19,12 +24,29 @@ public class MoneyManage : MonoBehaviour
     }
     public void Upgrade()
     {
-        float upgradeCost = 10f;
+        
         if (money >= upgradeCost)
         {
             money -= upgradeCost;
-            moneyPerSecond *= 2;
+            moneyPerSecond += 1;
+            
         }
+    }
+    public IEnumerator WaitTime()
+    {
+        while (true)
+        
+        {
+            yield return new WaitForSeconds(1);
+            money += moneyPerSecond;
+            
+
+        }
+        yield return null;
+       
+        
+
+
     }
    
 }
